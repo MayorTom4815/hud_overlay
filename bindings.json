@@ -1,0 +1,24 @@
+{
+    "formato_4": {
+        "Arriba": 119,
+        "Abajo": 115,
+        "Izquierda": 97,
+        "Derecha": 100,
+        "LP": 106,
+        "LK": 105,
+        "HP": 111,
+        "HK": 32
+    },
+    "formato_6": {
+        "Arriba": 119,
+        "Abajo": 115,
+        "Izquierda": 97,
+        "Derecha": 100,
+        "LP": 117,
+        "MP": 105,
+        "HP": 111,
+        "LK": 106,
+        "MK": 107,
+        "HK": 108
+    }
+}

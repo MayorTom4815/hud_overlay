@@ -1,0 +1,125 @@
+import pygame
+import os
+import threading
+import evdev
+from evdev import InputDevice, categorize, ecodes
+
+# ---------------- CONFIGURACIÓN ----------------
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+FPS = 60
+JOYSTICK_CENTER = (150, 300)
+JOYSTICK_RADIUS = 50
+BUTTON_POSITIONS = [
+    (550, 300),
+    (610, 300),
+    (670, 300),
+    (550, 360),
+    (610, 360),
+    (670, 360),
+]
+BUTTON_RADIUS = 30
+ICON_PATHS = [
+    "icons/lp.png", "icons/mp.png", "icons/hp.png",
+    "icons/lk.png", "icons/mk.png", "icons/hk.png"
+]
+MAX_BUTTONS = len(ICON_PATHS)
+DEVICE_NAME_FILTER = ["joystick", "gamepad"]
+# ------------------------------------------------
+
+# Estado global
+stick_position = [0, 0]
+button_states = [False] * MAX_BUTTONS
+icons = []
+
+# ---------------- UTILIDADES ----------------
+def load_icons():
+    loaded = []
+    for path in ICON_PATHS:
+        if os.path.exists(path):
+            image = pygame.image.load(path).convert_alpha()
+            image = pygame.transform.scale(image, (BUTTON_RADIUS * 2, BUTTON_RADIUS * 2))
+            loaded.append(image)
+        else:
+            print(f"[WARN] No se encontró el ícono: {path}")
+            loaded.append(None)
+    return loaded
+
+def find_gamepad():
+    for path in evdev.list_devices():
+        dev = InputDevice(path)
+        if any(name in dev.name.lower() for name in DEVICE_NAME_FILTER):
+            return dev
+    return None
+
+# ---------------- ENTRADA ----------------
+def input_thread():
+    dev = find_gamepad()
+    if not dev:
+        print("[ERROR] No se encontró joystick")
+        return
+
+    print(f"[INFO] Leyendo eventos de: {dev.name}")
+    for event in dev.read_loop():
+        if event.type == ecodes.EV_ABS:
+            absevent = categorize(event)
+            if event.code == ecodes.ABS_X:
+                stick_position[0] = absevent.event.value / 128.0 - 1  # [-1, 1]
+            elif event.code == ecodes.ABS_Y:
+                stick_position[1] = absevent.event.value / 128.0 - 1
+        elif event.type == ecodes.EV_KEY:
+            if ecodes.BTN_0 <= event.code < ecodes.BTN_0 + MAX_BUTTONS:
+                idx = event.code - ecodes.BTN_0
+                if idx < MAX_BUTTONS:
+                    button_states[idx] = event.value == 1
+
+# ---------------- RENDER ----------------
+def draw_stick(screen):
+    dx = int(stick_position[0] * JOYSTICK_RADIUS)
+    dy = int(stick_position[1] * JOYSTICK_RADIUS)
+    center = JOYSTICK_CENTER
+    pygame.draw.circle(screen, (100, 100, 100), center, JOYSTICK_RADIUS, 2)
+    pygame.draw.circle(screen, (0, 255, 0), (center[0] + dx, center[1] + dy), 15)
+
+def draw_buttons(screen):
+    for i, pos in enumerate(BUTTON_POSITIONS):
+        icon = icons[i]
+        if icon:
+            rect = icon.get_rect(center=pos)
+            screen.blit(icon, rect)
+            if button_states[i]:
+                pygame.draw.circle(screen, (0, 255, 0), pos, BUTTON_RADIUS, 4)
+        else:
+            color = (255, 0, 0) if button_states[i] else (80, 80, 80)
+            pygame.draw.circle(screen, color, pos, BUTTON_RADIUS)
+
+# ---------------- MAIN ----------------
+def main():
+    global icons
+    pygame.init()
+    os.environ['SDL_VIDEO_WINDOW_POS'] = "100,100"  # Posición inicial
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
+    pygame.display.set_caption("Arcade HUD Overlay")
+    clock = pygame.time.Clock()
+    icons = load_icons()
+
+    # Iniciar el hilo de lectura de entrada
+    threading.Thread(target=input_thread, daemon=True).start()
+
+    running = True
+    while running:
+        screen.fill((0, 0, 0, 0))  # Fondo transparente (en apariencia)
+        draw_stick(screen)
+        draw_buttons(screen)
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        clock.tick(FPS)
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
+
