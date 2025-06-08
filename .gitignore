@@ -1,0 +1,16 @@
+# Ignorar entorno virtual y cachés de Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Archivos de sistema
+.DS_Store
+*.swp
+*.swo
+
+# Configs personales
+*.bak
+*.old
