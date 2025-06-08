@@ -4,6 +4,7 @@ import pygame
 import threading
 import sys
 import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "libs"))
 import config  # Necesario para mutar config.BUTTON_FORMAT
 import json
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, FPS
