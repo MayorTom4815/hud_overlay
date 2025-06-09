@@ -4,7 +4,7 @@ import pygame
 from config import COLOR_TEXT, SCREEN_WIDTH, SCREEN_HEIGHT
 
 def choose_input_mode(screen):
-    font = pygame.font.SysFont(None, 30)
+    font = pygame.font.SysFont(None, 28)
     prompt = "Selecciona el modo de entrada:"
     option1 = "Presiona [T] para TECLADO"
     option2 = "Presiona [J] para JOYSTICK"
@@ -12,9 +12,9 @@ def choose_input_mode(screen):
     choosing = True
     while choosing:
         screen.fill((0, 0, 0))
-        draw_centered_text(screen, font, prompt, y=100)
-        draw_centered_text(screen, font, option1, y=150)
-        draw_centered_text(screen, font, option2, y=190)
+        draw_centered_text(screen, font, prompt, y=25)
+        draw_centered_text(screen, font, option1, y=80)
+        draw_centered_text(screen, font, option2, y=120)
         pygame.display.flip()
 
         for event in pygame.event.get():

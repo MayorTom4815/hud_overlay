@@ -10,7 +10,7 @@ from config import get_button_labels, COLOR_TEXT, SCREEN_WIDTH
 JOYSTICK_BINDINGS_PATH = "joystick_bindings.json"
 
 def map_joystick_buttons(screen):
-    font = pygame.font.SysFont(None, 32)
+    font = pygame.font.SysFont(None, 28)
     labels = get_button_labels()
 
     # Buscar primer joystick disponible

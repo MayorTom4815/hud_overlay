@@ -12,9 +12,9 @@ def choose_button_format(screen):
     choosing = True
     while choosing:
         screen.fill((0, 0, 0))
-        draw_centered_text(screen, font, prompt, y=100)
-        draw_centered_text(screen, font, option1, y=150)
-        draw_centered_text(screen, font, option2, y=190)
+        draw_centered_text(screen, font, prompt, y=25)
+        draw_centered_text(screen, font, option1, y=80)
+        draw_centered_text(screen, font, option2, y=125)
         pygame.display.flip()
 
         for event in pygame.event.get():

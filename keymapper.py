@@ -42,7 +42,7 @@ def wait_for_keypress(screen, font, message):
     waiting = True
     while waiting:
         screen.fill((0, 0, 0))
-        draw_centered_text(screen, font, message, y=150)
+        draw_centered_text(screen, font, message, y=75)
         pygame.display.flip()
 
         for event in pygame.event.get():
