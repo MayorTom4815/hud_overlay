@@ -4,7 +4,7 @@ import pygame
 from config import COLOR_TEXT, SCREEN_WIDTH
 
 def choose_button_format(screen):
-    font = pygame.font.SysFont(None, 30)
+    font = pygame.font.SysFont(None, 28)
     prompt = "Selecciona el formato de botones:"
     option1 = "Presiona [4] para 4 botones"
     option2 = "Presiona [6] para 6 botones"

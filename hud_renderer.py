@@ -38,8 +38,8 @@ def draw_stick(screen, vec):
 
     # Normalizar diagonal
     if dx != 0 and dy != 0:
-        dx *= 0.7
-        dy *= 0.7
+        dx *= 1
+        dy *= 1
 
     end_x = int(center_x + dx * stick_length)
     end_y = int(center_y + dy * stick_length)

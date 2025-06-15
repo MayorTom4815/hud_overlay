@@ -15,6 +15,7 @@ from keymapper import map_keys
 from joystick_mapper import map_joystick_buttons
 from input_reader import start_input_listener, input_state
 from hud_renderer import draw_hud, load_icons
+BINDINGS_PATH = "bindings.json"
 
 def main():
     # Inicializar Pygame

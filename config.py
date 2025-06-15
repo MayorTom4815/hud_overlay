@@ -1,14 +1,14 @@
 # config.py
 
 # Ventana
-SCREEN_WIDTH = 350
-SCREEN_HEIGHT = 150
+SCREEN_WIDTH = 375
+SCREEN_HEIGHT = 175
 FPS = 60
 
 # Joystick
-JOYSTICK_CENTER = (75, 75)
+JOYSTICK_CENTER = (75, 85)
 JOYSTICK_RADIUS = 50
-JOYSTICK_STICK_LENGTH = 35
+JOYSTICK_STICK_LENGTH = 40
 
 # Botón (radio constante)
 BUTTON_RADIUS = 30
@@ -60,12 +60,12 @@ def get_icon_paths():
 def get_button_positions():
     # Define 6 posiciones fijas
     full_positions = {
-        "LP": (190, 40),
-        "MP": (250, 40),
-        "HP": (310, 40),
-        "LK": (190, 110),
-        "MK": (250, 110),
-        "HK": (310, 110),
+        "LP": (195, 50),
+        "MP": (265, 50),
+        "HP": (335, 50),
+        "LK": (195, 130),
+        "MK": (265, 130),
+        "HK": (335, 130),
     }
     return [full_positions[label] for label in get_button_labels()]
 
