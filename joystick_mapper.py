@@ -4,14 +4,14 @@ import pygame
 import json
 import evdev
 import select
-from evdev import InputDevice, ecodes
+from evdev import InputDevice, ecodes, util
 from config import get_button_labels, COLOR_TEXT, SCREEN_WIDTH
 
 JOYSTICK_BINDINGS_PATH = "joystick_bindings.json"
 
 def map_joystick_buttons(screen):
-    font = pygame.font.SysFont(None, 28)
-    labels = get_button_labels()
+    font = pygame.font.SysFont(None, 32)
+    labels = get_button_labels()  # ✅ Solo LP, LK, HP, HK si formato_4
 
     # Buscar primer joystick disponible
     dev = None
@@ -19,7 +19,7 @@ def map_joystick_buttons(screen):
         d = InputDevice(path)
         if "joystick" in d.name.lower() or "gamepad" in d.name.lower():
             dev = d
-            dev.grab()  # opcional: evita que otros programas lean
+            dev.grab()
             break
 
     if not dev:
@@ -35,7 +35,7 @@ def map_joystick_buttons(screen):
         waiting = True
         while waiting:
             screen.fill((0, 0, 0))
-            draw_centered_text(screen, font, prompt, y=250)
+            draw_centered_text(screen, font, prompt, y=150)
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -48,11 +48,11 @@ def map_joystick_buttons(screen):
                 for event in dev.read():
                     if event.type == ecodes.EV_KEY and event.value == 1:
                         bindings[label] = event.code
-                        print(f"[OK] {label} → code {event.code} ({ecodes.KEY[event.code] if event.code in ecodes.KEY else event.code})")
+                        print(f"[OK] {label} → code {event.code}")
                         waiting = False
                         break
 
-    # Guardar configuración según formato (4 o 6 botones)
+    # Guardar en archivo por formato
     formato = f"formato_{len(get_button_labels())}"
 
     try:
@@ -66,10 +66,11 @@ def map_joystick_buttons(screen):
     with open(JOYSTICK_BINDINGS_PATH, "w") as f:
         json.dump(all_bindings, f, indent=4)
 
-    print(f"[OK] Mapeo guardado en '{JOYSTICK_BINDINGS_PATH}'")
-    dev.ungrab()  # libera el dispositivo si se había agarrado
+    print(f"[OK] Mapeo de joystick guardado en '{JOYSTICK_BINDINGS_PATH}'")
+    dev.ungrab()
 
 def draw_centered_text(screen, font, text, y):
     surface = font.render(text, True, COLOR_TEXT)
     rect = surface.get_rect(center=(SCREEN_WIDTH // 2, y))
     screen.blit(surface, rect)
+
