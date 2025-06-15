@@ -38,23 +38,23 @@ Guarda en joystick_bindings.json.
 #### 📁 Estructura del proyecto
 
 hud_overlay/<br>
-├── main.py        # Script principal del proyecto.<br>
-├── config.py        # Script donde se guarda la configuracion.<br>
-├── input_reader.py        # Lee los archivos `.json` para darle las instrucciones de mapeo al renderizador.<br>
-├── joystick_mapper.py        # El encargado de mapear al joystick.<br>
-├── keymapper.py        # El encargado de mapear al teclado.<br>
-├── hud_renderer.py        # Crea al joystick arcade y a los botones.<br>
-├── input_selector.py        # Pregunta al usuario que formato dispositivo desea utilizar.<br>
-├── button_format_selector.py        # Pregunta al usuario si usara 4 botones 6.<br>
-├── bindings.json        # Aqui se guarda la configuracion del teclado.<br>
-├── joystick_bindings.json        # Aqui se guarda la confiuracion ded joystick.<br>
-├── libs/        # Aqui estan las librerias que se necesian para que funcionen.<br>
-│   ├── pygame/        # Aqui esta la libreia crear juegos pero que se utiliza para el renrizado del fightstick.<br>
-│   └── evdev/        # Aqui esta la libreria que lee los movimientos del dispositivo seleccionado.<br>
-└── icons/        # Aqui se almacenan las iconos.<br>
+├── main.py<br>
+├── config.py<br>
+├── input_reader.py<br>
+├── joystick_mapper.py<br>
+├── keymapper.py<br>
+├── hud_renderer.py<br>
+├── input_selector.py<br>
+├── button_format_selector.py<br>
+├── bindings.json<br>
+├── joystick_bindings.json<br>
+├── libs/<br>
+│   ├── pygame/<br>
+│   └── evdev/<br>
+└── icons/<br>
     ├── lp.png<br>
     ├── mp.png<br>
-    └── ...<br>
+    └── ...
     
 Gracias al uso de la carpeta libs/, no se requiere instalar dependencias con pip.
 
