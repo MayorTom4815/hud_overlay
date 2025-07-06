@@ -1,0 +1,9 @@
+[project]
+name = "hud-overlay"
+version = "0.2.0b"
+description = "Visualizador gráfico de entradas tipo arcade para joystick o teclado,"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pygame>=2.6.1",
+]

@@ -1,92 +1,73 @@
-# input_reader.py
-
 import pygame
-import json
-import time
-import evdev
-from evdev import InputDevice, categorize, ecodes
+import config
 
-from config import (
-    BINDINGS_PATH, DEVICE_NAME_FILTER, get_button_labels
-)
+def start_input_listener():
+    match config.input_type:
+        case config.DEVICES.KEYBOARD:
+            listen_keyboard()
 
-JOYSTICK_BINDINGS_PATH = "joystick_bindings.json"
+        # case config.DEVICES.JOYSTICK:
+        #     listen_joystick(bindings)
 
-# Estado compartido leído por el HUD
-input_state = {
-    "stick": [0, 0],  # dx, dy
-    "buttons": [False] * len(get_button_labels())
-}
-
-bindings = {}
-
-def start_input_listener(mode):
-    global bindings
-
-    if mode == "teclado":
-        with open(BINDINGS_PATH, "r") as f:
-            bindings_all = json.load(f)
-            formato = f"formato_{len(get_button_labels())}"
-            bindings = bindings_all[formato]
-        listen_keyboard()
-    elif mode == "joystick":
-        with open(JOYSTICK_BINDINGS_PATH, "r") as f:
-            all_bindings = json.load(f)
-            formato = f"formato_{len(get_button_labels())}"
-            bindings = all_bindings[formato]
-        listen_joystick(bindings)
 
 # ---------------- TECLADO ----------------
-def listen_keyboard():
+def listen_keyboard() -> None:
     while True:
-        keys = pygame.key.get_pressed()
+        pressed_keys = pygame.key.get_pressed()
 
-        dx = dy = 0
-        if keys[bindings["Izquierda"]]:
-            dx -= 1
-        if keys[bindings["Derecha"]]:
-            dx += 1
-        if keys[bindings["Arriba"]]:
-            dy -= 1
-        if keys[bindings["Abajo"]]:
-            dy += 1
+        config.joystick_hud.dx = 0
+        config.joystick_hud.dy = 0
 
-        if dx != 0 and dy != 0:
-            dx *= 0.7
-            dy *= 0.7
+        if pressed_keys[config.bindings[0][3]]:
+            config.joystick_hud.dy -= 1
 
-        input_state["stick"] = [dx, dy]
+        elif pressed_keys[config.bindings[1][3]]:
+            config.joystick_hud.dy += 1
 
-        for i, name in enumerate(get_button_labels()):
-            input_state["buttons"][i] = keys[bindings[name]]
+        elif pressed_keys[config.bindings[2][3]]:
+            config.joystick_hud.dx -= 1
 
-        time.sleep(0.01)
+        elif pressed_keys[config.bindings[3][3]]:
+            config.joystick_hud.dx += 1
+
+        if config.joystick_hud.dx != 0 and config.joystick_hud.dy != 0:
+            config.joystick_hud.dx *= 0.7
+            config.joystick_hud.dy *= 0.7
+
+        for button in config.button_states.keys():
+            state = config.button_states[button]
+
+            if pressed_keys[state["bind"]]:
+                state["state"] = True
+
+            else:
+                state["state"] = False
+
 
 # ---------------- JOYSTICK ----------------
-def listen_joystick(bindings):
-    dev = None
-    for path in evdev.list_devices():
-        d = InputDevice(path)
-        if any(name in d.name.lower() for name in DEVICE_NAME_FILTER):
-            dev = d
-            break
+# def listen_joystick(bindings:list[tuple]):
+#     dev = None
+#     for path in evdev.list_devices():
+#         d = InputDevice(path)
+#         if any(name in d.name.lower() for name in DEVICE_NAME_FILTER):
+#             dev = d
+#             break
 
-    if not dev:
-        print("[ERROR] No se detectó joystick compatible.")
-        return
+#     if not dev:
+#         print("[ERROR] No se detectó joystick compatible.")
+#         return
 
-    print(f"[INFO] Leyendo entradas desde: {dev.name}")
+#     print(f"[INFO] Leyendo entradas desde: {dev.name}")
 
-    for event in dev.read_loop():
-        if event.type == ecodes.EV_ABS:
-            absevent = categorize(event)
-            if event.code == ecodes.ABS_X:
-                input_state["stick"][0] = absevent.event.value / 128.0 - 1
-            elif event.code == ecodes.ABS_Y:
-                input_state["stick"][1] = absevent.event.value / 128.0 - 1
+#     for event in dev.read_loop():
+#         if event.type == ecodes.EV_ABS:
+#             absevent = categorize(event)
+#             if event.code == ecodes.ABS_X:
+#                 input_state["stick"][0] = absevent.event.value / 128.0 - 1
+#             elif event.code == ecodes.ABS_Y:
+#                 input_state["stick"][1] = absevent.event.value / 128.0 - 1
 
-        elif event.type == ecodes.EV_KEY:
-            for i, label in enumerate(get_button_labels()):
-                if event.code == bindings.get(label):
-                    input_state["buttons"][i] = event.value == 1
-
+#         elif event.type == ecodes.EV_KEY:
+#             for i, label in enumerate(get_button_labels()):
+#                 if event.code == bindings.get(label):
+#                     input_state["buttons"][i] = event.value == 1

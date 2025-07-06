@@ -1,71 +1,103 @@
 # config.py
+from dataclasses import dataclass
+from os.path import expanduser
+from enum import Enum
 
-# Ventana
-SCREEN_WIDTH = 375
-SCREEN_HEIGHT = 175
-FPS = 60
+from pygame.color import Color
+from save_manager import SaverManager
 
-# Joystick
-JOYSTICK_CENTER = (75, 85)
-JOYSTICK_RADIUS = 50
-JOYSTICK_STICK_LENGTH = 40
+#---------------------
+#     Constantes
+#---------------------
+# ! ¡No tocar!
 
-# Botón (radio constante)
-BUTTON_RADIUS = 30
 
-# Ruta para guardar bindings si se usa teclado
-BINDINGS_PATH = "bindings.json"
+class DIRECCTIONS(Enum):
+    UP = "arriba"
+    DOWN = "abajo"
+    LEFT = "izquierda"
+    RIGHT = "derecha"
 
-# Filtro de nombre de dispositivo joystick
-DEVICE_NAME_FILTER = ["joystick", "gamepad"]
 
-# Colores
-COLOR_BG = (0, 0, 0, 0)
-COLOR_STICK = (100, 100, 100)
-COLOR_STICK_KNOB = (0, 255, 0)
-COLOR_BUTTON_INACTIVE = (80, 80, 80)
-COLOR_BUTTON_ACTIVE = (0, 255, 0)
-COLOR_TEXT = (255, 255, 255)
+class BUTTONS(Enum):
+    LOW_PUNCH = "LP"
+    MEDIUM_PUNCH = "MP"
+    HIGH_PUNCH = "HP"
 
-# -------------------------------
-# CONFIGURACIÓN DINÁMICA
-# -------------------------------
+    LOW_KICK = "LK"
+    MEDIUM_KICK = "MK"
+    HIGH_KICK = "HK"
 
-# Este valor se ajusta en tiempo de ejecución por main.py
-BUTTON_FORMAT = 6  # Puede ser 4 o 6
 
-def get_button_labels():
-    if BUTTON_FORMAT == 4:
-        return ["LP", "LK", "HP", "HK"]
-    else:
-        return ["LP", "MP", "HP", "LK", "MK", "HK"]
+class DEVICES(Enum):
+    JOYSTICK = "joystick"
+    KEYBOARD = "keyboard"
 
-def get_icon_paths():
-    return [
-        "icons/lp.png", "icons/mp.png", "icons/hp.png",
-        "icons/lk.png", "icons/mk.png", "icons/hk.png"
-    ][:BUTTON_FORMAT]
 
-def get_icon_paths():
-    icon_map = {
-        "LP": "icons/lp.png",
-        "MP": "icons/mp.png",
-        "HP": "icons/hp.png",
-        "LK": "icons/lk.png",
-        "MK": "icons/mk.png",
-        "HK": "icons/hk.png",
-    }
-    return [icon_map[label] for label in get_button_labels()]
+@dataclass
+class STICK:
+    dx: float = 0
+    dy: float = 0
 
-def get_button_positions():
-    # Define 6 posiciones fijas
-    full_positions = {
-        "LP": (195, 50),
-        "MP": (265, 50),
-        "HP": (335, 50),
-        "LK": (195, 130),
-        "MK": (265, 130),
-        "HK": (335, 130),
-    }
-    return [full_positions[label] for label in get_button_labels()]
 
+@dataclass
+class WINDOW:
+    color_bg = Color(0, 0, 0, 0)
+    color_fg = Color(255, 255, 255)
+    size: tuple = (420, 245)
+    fps: int = 60
+
+
+BUTTONS_FORMATS: dict = {
+    4: [
+        DIRECCTIONS.UP,
+        DIRECCTIONS.DOWN,
+        DIRECCTIONS.LEFT,
+        DIRECCTIONS.RIGHT,
+        BUTTONS.LOW_PUNCH,
+        BUTTONS.HIGH_PUNCH,
+        BUTTONS.LOW_KICK,
+        BUTTONS.HIGH_KICK,
+    ],
+    6: [
+        DIRECCTIONS.UP,
+        DIRECCTIONS.DOWN,
+        DIRECCTIONS.LEFT,
+        DIRECCTIONS.RIGHT,
+        BUTTONS.LOW_KICK,
+        BUTTONS.MEDIUM_KICK,
+        BUTTONS.HIGH_KICK,
+        BUTTONS.LOW_PUNCH,
+        BUTTONS.MEDIUM_PUNCH,
+        BUTTONS.HIGH_PUNCH,
+    ],
+}
+
+
+BUTTONS_POSITION: dict = {
+    "LP": (195, 50),
+    "MP": (265, 50),
+    "HP": (335, 50),
+    "LK": (195, 130),
+    "MK": (265, 130),
+    "HK": (335, 130),
+}
+
+JOYSTICKS: list = []
+
+# * Ruta del guardado
+# ? Puedes modificar esto:
+BINDINGS_PATH: str = expanduser("~/.bindings.db")
+
+#--------------------
+#      Valores
+#--------------------
+
+saver: SaverManager = SaverManager(BINDINGS_PATH)
+input_type: DEVICES = DEVICES.KEYBOARD
+button_format: int = 0
+
+joystick_hud: STICK = STICK()
+bindings: list[tuple] = []
+
+button_states: dict = {}
