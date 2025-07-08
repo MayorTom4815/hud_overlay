@@ -1,6 +1,5 @@
-import config
 from templates import ConfigScreen
-from config import DEVICES
+from config import DEVICES, WINDOW
 import pygame
 
 texts: list[str] = [
@@ -12,13 +11,13 @@ texts: list[str] = [
 
 class TypeInputScreen(ConfigScreen):
     def render(self) -> DEVICES:
-        self.screen.fill(config.WINDOW.color_bg)
+        self.screen.fill(WINDOW.color_bg)
         while True:
-            ypos = 60
+            ypos = 50
 
             for i in texts:
-                self.draw_centered_text(i, ypos)
-                ypos += 50
+                self.draw_centered_text(self.FONTS["NORMAL"], i, ypos)
+                ypos += 30
 
             pygame.display.flip()
 

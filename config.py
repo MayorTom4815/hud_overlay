@@ -1,16 +1,14 @@
-# config.py
 from dataclasses import dataclass
 from os.path import expanduser
 from enum import Enum
 
-from pygame.color import Color
 from save_manager import SaverManager
+from pygame.joystick import Joystick
 
 #---------------------
 #     Constantes
 #---------------------
 # ! ¡No tocar!
-
 
 class DIRECCTIONS(Enum):
     UP = "arriba"
@@ -42,10 +40,11 @@ class STICK:
 
 @dataclass
 class WINDOW:
-    color_bg = Color(0, 0, 0, 0)
-    color_fg = Color(255, 255, 255)
-    size: tuple = (420, 245)
+    color_bg = (0, 0, 0, 0)
+    color_fg = (255, 255, 255)
+    size: tuple = (375, 175)
     fps: int = 60
+
 
 
 BUTTONS_FORMATS: dict = {
@@ -83,7 +82,7 @@ BUTTONS_POSITION: dict = {
     "HK": (335, 130),
 }
 
-JOYSTICKS: list = []
+JOYSTICKS: list[Joystick] = []
 
 # * Ruta del guardado
 # ? Puedes modificar esto:

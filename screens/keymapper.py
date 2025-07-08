@@ -1,6 +1,7 @@
-from templates import ConfigScreen
 import config
+from templates import ConfigScreen
 import pygame
+
 
 class MappingScreen(ConfigScreen):
     def wait_for_keypress(
@@ -9,7 +10,9 @@ class MappingScreen(ConfigScreen):
         while True:
             self.screen.fill(config.WINDOW.color_bg)
             self.draw_centered_text(
-                f"Seleccione la tecla para el boton {button.value}", 50
+                self.FONTS["NORMAL"],
+                f"Seleccione la tecla para el boton {button.value}",
+                50,
             )
             pygame.display.flip()
 
@@ -37,15 +40,23 @@ class MappingScreen(ConfigScreen):
                     )
 
             case config.DEVICES.JOYSTICK:
+                bformat = config.BUTTONS_FORMATS[config.button_format]
+
                 if config.JOYSTICKS.__len__() > 0:
-                    for button in config.BUTTONS_FORMATS[config.button_format]:
+                    for i in range(4, bformat.__len__()):
                         temp_binding.append(
                             (
                                 config.input_type.value,
                                 config.button_format,
-                                button.value,
-                                self.wait_for_keypress(button, pygame.JOYBUTTONDOWN),
+                                bformat[i].value,
+                                str(
+                                    self.wait_for_keypress(
+                                        bformat[i], pygame.JOYBUTTONDOWN
+                                    )
+                                ),
                             )
                         )
+                else:
+                    print("[Error] No hay controles disponibles")
 
         config.saver.write_bindings(temp_binding)

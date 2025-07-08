@@ -1,5 +1,5 @@
-import config
 from templates import ConfigScreen
+from config import WINDOW
 import pygame
 
 texts: list[str] = [
@@ -11,13 +11,13 @@ texts: list[str] = [
 
 class ChoosingButtonsScreen(ConfigScreen):
     def render(self) -> int:
-        self.screen.fill(config.WINDOW.color_bg)
+        self.screen.fill(WINDOW.color_bg)
         while True:
-            ypos = 60
+            ypos = 50
 
             for i in texts:
-                self.draw_centered_text(i, ypos)
-                ypos += 50
+                self.draw_centered_text(self.FONTS["NORMAL"], i, ypos)
+                ypos += 30
 
             pygame.display.flip()
 

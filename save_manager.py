@@ -15,7 +15,7 @@ class SaverManager:
 
         try:
             self.cursor.execute(
-                f"CREATE TABLE {TABLES.CONTROLLER.value}(input_type TEXT NOT NULL, button_format INTEGER NOT NULL UNIQUE)"
+                f"CREATE TABLE {TABLES.CONTROLLER.value}(input_type TEXT NOT NULL, button_format INTEGER NOT NULL)"
             )
             self.cursor.execute(
                 f"CREATE TABLE {TABLES.BINDING.value}(input_type TEXT NOT NULL, button_format INTEGER NOT NULL, button TEXT NOT NULL, key INTEGER NOT NULL)"

@@ -10,7 +10,7 @@ Perfecto para tutoriales de juegos de pelea, demostraciones de habilidad o como 
 * Asignación personalizada para cada botón.
 * Las configuraciones se guardan en "~/binginds.db".
 
-## Requisitos 
+### Requisitos 
 
 * Python >= 3.13
 * Pygame >= 2.6.1
@@ -41,14 +41,19 @@ pip install requirements.txt
 #Iniciar el programa
 make run 
 ```
-## Estado actual del proyecto (version 0.2.0b)
-* Refactor copleto
-* Aun no se ha implementado la visualizacion de botones para Joysticks
-* se ha removido la libreria evdev, puesto que pygame tiene su soporte para joysicks
+## Estado actual del proyecto (version 0.2.1b)
+* Se ha removido la libreria evdev, puesto que pygame tiene su soporte para joysicks.
+* Aun no hay un transparente al completo solo emulado por pygame, por ende no hay trasparencia. :[
+
+* Refactor del proyecto completo ahora es mas modable.
+
+
+### Por Hacer
+1. Hacer una interfaz mas comoda (Agregar botones en vez de teclas para seleccionar las opciones, una mejor fuente, etc...).
+
+2. hacer que el programa detecte al 100% sin estar enfocado.
 
 ## 👾 Créditos
-@Cat-not-furry (creador del proyecto)
+Este proyecto fue desarrollado con amor al figthing y *mucha paciencia por leer el codigo de un novato.*
 
-Este proyecto fue desarrollado con amor al figthing y mucha paciencia por leer el codigo de un novato.
-
-Esta version no es para opacar al original o humillar al creador, si no como ayuda al creador para ayudarlo a corregir sus errores, por eso es un fork.
+**@Cat-not-furry** (creador del proyecto)

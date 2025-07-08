@@ -1,16 +1,27 @@
 import pygame
 import config
 
+
 def start_input_listener():
     match config.input_type:
         case config.DEVICES.KEYBOARD:
+            config.button_states = {
+                config.bindings[i][2]: {"bind": config.bindings[i][3], "state": False}
+                for i in range(4, config.bindings.__len__())
+            }
+
             listen_keyboard()
 
-        # case config.DEVICES.JOYSTICK:
-        #     listen_joystick(bindings)
+        case config.DEVICES.JOYSTICK:
+            config.button_states = {
+                config.bindings[i][2]: {"bind": config.bindings[i][3], "state": False}
+                for i in range(config.bindings.__len__())
+            }
+
+            listen_joystick()
 
 
-# ---------------- TECLADO ----------------
+# * TECLADO
 def listen_keyboard() -> None:
     while True:
         pressed_keys = pygame.key.get_pressed()
@@ -44,30 +55,21 @@ def listen_keyboard() -> None:
                 state["state"] = False
 
 
-# ---------------- JOYSTICK ----------------
-# def listen_joystick(bindings:list[tuple]):
-#     dev = None
-#     for path in evdev.list_devices():
-#         d = InputDevice(path)
-#         if any(name in d.name.lower() for name in DEVICE_NAME_FILTER):
-#             dev = d
-#             break
+# * JOYSTICK
+def listen_joystick() -> None:
+    while True:
+        control = config.JOYSTICKS[0]
 
-#     if not dev:
-#         print("[ERROR] No se detectó joystick compatible.")
-#         return
+        pressed_keys = [control.get_button(i) for i in range(control.get_numbuttons())]
 
-#     print(f"[INFO] Leyendo entradas desde: {dev.name}")
+        config.joystick_hud.dx = control.get_axis(0)
+        config.joystick_hud.dy = control.get_axis(1)
 
-#     for event in dev.read_loop():
-#         if event.type == ecodes.EV_ABS:
-#             absevent = categorize(event)
-#             if event.code == ecodes.ABS_X:
-#                 input_state["stick"][0] = absevent.event.value / 128.0 - 1
-#             elif event.code == ecodes.ABS_Y:
-#                 input_state["stick"][1] = absevent.event.value / 128.0 - 1
+        for button in config.button_states.keys():
+            state = config.button_states[button]
 
-#         elif event.type == ecodes.EV_KEY:
-#             for i, label in enumerate(get_button_labels()):
-#                 if event.code == bindings.get(label):
-#                     input_state["buttons"][i] = event.value == 1
+            if pressed_keys[int(state["bind"])]:
+                state["state"] = True
+
+            else:
+                state["state"] = False
