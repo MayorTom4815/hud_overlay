@@ -41,7 +41,7 @@ pip install requirements.txt
 #Iniciar el programa
 make run 
 ```
-## Estado actual del proyecto (version 0.2.1b)
+## Estado actual del proyecto (version 0.2.1)
 * Se ha removido la libreria evdev, puesto que pygame tiene su soporte para joysicks.
 * Aun no hay un transparente al completo solo emulado por pygame, por ende no hay trasparencia. :[
 
