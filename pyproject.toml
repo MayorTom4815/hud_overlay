@@ -3,7 +3,7 @@ name = "hud-overlay"
 version = "0.2.1"
 description = "Visualizador gráfico de entradas tipo arcade para joystick o teclado,"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
-    "pygame>=2.6.1",
+    "raylib>=5.5.0.4",
 ]
