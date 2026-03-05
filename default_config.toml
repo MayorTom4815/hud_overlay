@@ -4,8 +4,8 @@ default_gamepad = 0
 
 [keyboard]
 change_cast = 263
-directions = { up = 87, down = 83, left = 65, right = 68 }
-buttons = { LP = 73, MP = 79, HP = 80, LK = 74, MK = 75, HK = 76 }
+directions = { up = "w", down = "s", left = "a", right = "d" }
+buttons = { LP = "i", MP = "o", HP = "p", LK = "j", MK = "k", HK = "l" }
 
 [joystick]
 buttons = { LP = 8, MP = 9, HP = 5, LK = 7, MK = 11, HK = 6 }

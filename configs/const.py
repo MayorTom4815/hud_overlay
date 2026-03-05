@@ -12,7 +12,7 @@ BUTTONS_POSITION: dict = {
 }
 
 
-DEFAULT_CONFIG = Path(".") / "default_config.toml"
-PATH_CONFIG = Path.home() / ".HUDOverlay.toml"
-WINDOW_HEIGHT = 175
-WINDOW_WIDTH = 375
+DEFAULT_CONFIG:Path = Path(".") / "default_config.toml"
+PATH_CONFIG:Path = Path.home() / ".HUDOverlay.toml"
+WINDOW_HEIGHT:int = 175
+WINDOW_WIDTH:int = 375

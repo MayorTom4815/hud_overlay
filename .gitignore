@@ -1,5 +1,5 @@
 # Ignorar entorno virtual y cachés de Python
-venv/
+.venv/
 __pycache__/
 *.pyc
 *.pyo
@@ -14,3 +14,5 @@ __pycache__/
 # Configs personales
 *.bak
 *.old
+
+builds/
