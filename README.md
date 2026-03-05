@@ -12,7 +12,6 @@ Perfecto para tutoriales de juegos de pelea, demostraciones de habilidad o como 
 
 ## Estado actual del proyecto (Versión 1)
 * Se a refactorizado el programa utilizando raylib en vez de Pygame para una mejor compatibilidad
-* Ya hay transparencia, pero aun falla en Linux.
 * Se ha optado por usar toml en vez de sqlite para las configuraciones
 * Puedes intercalar entre el jostick y teclado pulsando "la flecha Izquierda"
 
