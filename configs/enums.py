@@ -6,7 +6,7 @@ class DEVICE_TYPE(Enum):
     KEYBOARD = "keyboard"
 
 
-class BUTTONS(Enum):
+class BUTTON_TYPE(Enum):
     # * punch
     LOW_PUNCH = "LP"
     MEDIUM_PUNCH = "MP"

@@ -5,6 +5,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.log
+*.spec
 
 # Archivos de sistema
 .DS_Store
@@ -15,4 +16,4 @@ __pycache__/
 *.bak
 *.old
 
-builds/
+build/

@@ -1,6 +1,6 @@
 [project]
 name = "hud-overlay"
-version = "1.1.0"
+version = "1.2.0"
 description = "Visualizador gráfico de entradas tipo arcade para joystick o teclado,"
 readme = "README.md"
 requires-python = ">=3.14"
@@ -11,5 +11,5 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "nuitka[onefile]>=4.0.2",
+    "nuitka[app]>=4.0.8",
 ]

@@ -1,0 +1,9 @@
+cffi==2.0.0
+evdev==1.9.3
+nuitka==4.0.8
+pycparser==3.0
+pynput==1.8.1
+python-xlib==0.33
+raylib==5.5.0.4
+six==1.17.0
+zstandard==0.25.0

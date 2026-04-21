@@ -1,0 +1,34 @@
+{
+  "default_monitor": 0,
+  "default_gamepad": 0,
+  "window_size": [375, 175],
+
+  "gamepad_position": [90, 90],
+  "gamepad_radius": 55,
+  "buttons_position": {
+    "LP": [210, 50],
+    "MP": [265, 50],
+    "HP": [320, 50],
+    "LK": [210, 130],
+    "MK": [265, 130],
+    "HK": [320, 130]
+  },
+
+  "keys": {
+    "change_cast": 263,
+    "directions": {
+      "up": "w",
+      "down": "s",
+      "left": "a",
+      "right": "d"
+    },
+    "buttons": {
+      "LP": ["i", 8],
+      "MP": ["o", 9],
+      "HP": ["p", 5],
+      "LK": ["j", 7],
+      "MK": ["k", 11],
+      "HK": ["l", 6]
+    }
+  }
+}
